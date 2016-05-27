@@ -1,6 +1,6 @@
 # e-mail_crawler
-  usage: python3 email_crawler.py <URL>
-  stop: ctrl+del
+    usage: python3 email_crawler.py <URL>  
+    stop: ctrl+del
 
 
 ## Result
