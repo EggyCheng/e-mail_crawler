@@ -1,6 +1,6 @@
 # e-mail_crawler
     usage: python3 email_crawler.py <URL>  
-    stop: ctrl+del
+    stop: ctrl+c
 
 
 ## Result(Demo URL:https://www.cs.ccu.edu.tw/)
