@@ -6,7 +6,7 @@ from collections import deque
 import re
 import argparse
 
-def crawler(firsturl):
+def crawler(firsturl,num):
     #url filter function
     def filter(url):
         #video file
@@ -26,6 +26,8 @@ def crawler(firsturl):
 
     # all of urls that I have already crawled
     processed_urls = set()
+    # count numbers of e-mails you have crawled.
+    limit_num = 0
 
     while len(new_urls):
 
@@ -40,7 +42,7 @@ def crawler(firsturl):
             parts = urlsplit(url)
             base_url = "{0.scheme}://{0.netloc}".format(parts)
             path = url[:url.rfind('/')+1] if '/' in parts.path else url
-            print("crawling %s" % url)
+           # print("crawling %s" % url)
 
             try:
                 #put the web info into response(dont redirect when occur redirect)
@@ -54,9 +56,19 @@ def crawler(firsturl):
             f = open("maillist.txt","a+")
 
             for value in new_emails:
-                print(value)
+                #print(value)
                 f.write(repr(value))
                 f.write("\n")
+		        #counter+1
+                limit_num+=1
+                print('You got %s e-mails.' % limit_num,end='\r')
+                if(limit_num == num):
+                    break
+
+            if(limit_num == num):
+                   print('===============You have crawled %s e-mails.===============' % num)
+                   print('===============The results are showed in maillist.txt.===============')
+                   break
 
             # BeautifulSoup the html document
             soup = BeautifulSoup(response.text,"lxml")
@@ -73,10 +85,12 @@ def crawler(firsturl):
                 # dont't crawl repeated url
                 if not link in new_urls and not link in processed_urls:
                     new_urls.append(link)
+            # if limit_num equals to the num(the number of e-mails what you set), break the proccess
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='It is a e-mail crawler.')
-    parser.add_argument('url', help='the url you want to crawl.')
+    parser.add_argument('-url', type=str, help='the url you want to crawl.')
+    parser.add_argument('-num', metavar='num', type=int, default=100, help='the numbers of e-mails addresses you want to crawl.')
     arg = parser.parse_args()
-    crawler(arg.url)
+    crawler(arg.url, arg.num)
