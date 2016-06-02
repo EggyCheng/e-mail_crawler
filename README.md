@@ -1,6 +1,6 @@
 # e-mail_crawler
+    I use [BeautifulSoup](https://www.crummy.com/software/BeautifulSoup/) and [Requests](http://docs.python-requests.org/en/latest/) as third party libraries.
     usage: python3 email_crawler.py -url <URL> -num <numbers of e-mails(default is 100)>
-    stop: ctrl+c
 
 
 ## Result(Demo URL:https://www.cs.ccu.edu.tw/)
